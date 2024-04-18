@@ -2455,7 +2455,6 @@
           "state": "Uttar Pradesh",
           "pinCode": "555555"
         },
-     
         {
           "first-name": "Abhay",
           "last-name": "Raj",
@@ -2545,6 +2544,160 @@
       ],
       "quantity": 1,
       "userId": "d86a"
+    }
+  ],
+  "orders": [
+    {
+      "id": "cf8e",
+      "items": [
+        {
+          "id": "bc61",
+          "title": "Samsung Universe 9",
+          "description": "Samsung's new variant which goes beyond Galaxy to the Universe",
+          "price": 1249,
+          "discountPercentage": 15.46,
+          "rating": 4.09,
+          "stock": 36,
+          "brand": "Samsung",
+          "category": "smartphones",
+          "thumbnail": "https://cdn.dummyjson.com/product-images/3/thumbnail.jpg",
+          "images": [
+            "https://cdn.dummyjson.com/product-images/3/1.jpg"
+          ],
+          "quantity": 1,
+          "userId": "d86a"
+        }
+      ],
+      "totalAmount": 1249,
+      "totalItems": 1,
+      "user": {
+        "id": "d86a",
+        "email": "test2@gmail.com",
+        "password": "Test@123",
+        "addresses": [
+          {
+            "first-name": "Abhay",
+            "last-name": "Raj",
+            "email": "abhay18d@gmail.com",
+            "country": "India",
+            "phone": "07727831882",
+            "street": "Sarnath",
+            "city": "Varanasi",
+            "state": "Uttar Pradesh",
+            "pinCode": "555555"
+          },
+          {
+            "first-name": "Abhay",
+            "last-name": "Raj",
+            "email": "abhay18d@gmail.com",
+            "country": "India",
+            "phone": "07727831882",
+            "street": "Sarnath",
+            "city": "Varanasi",
+            "state": "Uttar Pradesh",
+            "pinCode": "555"
+          },
+          {
+            "first-name": "Abhay",
+            "last-name": "Raj",
+            "email": "abhay18d@gmail.com",
+            "country": "India",
+            "phone": "07727831882",
+            "street": "Sarnath",
+            "city": "Varanasi",
+            "state": "Uttar Pradesh",
+            "pinCode": "1111"
+          }
+        ]
+      },
+      "paymentMethod": "cash",
+      "selectedAddress": {
+        "first-name": "Abhay",
+        "last-name": "Raj",
+        "email": "abhay18d@gmail.com",
+        "country": "India",
+        "phone": "07727831882",
+        "street": "Sarnath",
+        "city": "Varanasi",
+        "state": "Uttar Pradesh",
+        "pinCode": "1111"
+      }
+    },
+    {
+      "id": "f873",
+      "items": [
+        {
+          "id": "bc61",
+          "title": "Samsung Universe 9",
+          "description": "Samsung's new variant which goes beyond Galaxy to the Universe",
+          "price": 1249,
+          "discountPercentage": 15.46,
+          "rating": 4.09,
+          "stock": 36,
+          "brand": "Samsung",
+          "category": "smartphones",
+          "thumbnail": "https://cdn.dummyjson.com/product-images/3/thumbnail.jpg",
+          "images": [
+            "https://cdn.dummyjson.com/product-images/3/1.jpg"
+          ],
+          "quantity": 1,
+          "userId": "d86a"
+        }
+      ],
+      "totalAmount": 1249,
+      "totalItems": 1,
+      "user": {
+        "id": "d86a",
+        "email": "test2@gmail.com",
+        "password": "Test@123",
+        "addresses": [
+          {
+            "first-name": "Abhay",
+            "last-name": "Raj",
+            "email": "abhay18d@gmail.com",
+            "country": "India",
+            "phone": "07727831882",
+            "street": "Sarnath",
+            "city": "Varanasi",
+            "state": "Uttar Pradesh",
+            "pinCode": "555555"
+          },
+          {
+            "first-name": "Abhay",
+            "last-name": "Raj",
+            "email": "abhay18d@gmail.com",
+            "country": "India",
+            "phone": "07727831882",
+            "street": "Sarnath",
+            "city": "Varanasi",
+            "state": "Uttar Pradesh",
+            "pinCode": "555"
+          },
+          {
+            "first-name": "Abhay",
+            "last-name": "Raj",
+            "email": "abhay18d@gmail.com",
+            "country": "India",
+            "phone": "07727831882",
+            "street": "Sarnath",
+            "city": "Varanasi",
+            "state": "Uttar Pradesh",
+            "pinCode": "1111"
+          }
+        ]
+      },
+      "paymentMethod": "cash",
+      "selectedAddress": {
+        "first-name": "Abhay",
+        "last-name": "Raj",
+        "email": "abhay18d@gmail.com",
+        "country": "India",
+        "phone": "07727831882",
+        "street": "Sarnath",
+        "city": "Varanasi",
+        "state": "Uttar Pradesh",
+        "pinCode": "1111"
+      }
     }
   ]
 }

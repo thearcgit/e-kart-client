@@ -8,6 +8,8 @@ import Checkout from "../../../pages/Checkout";
 import ProductDetail from "../../product/components/ProductDetail";
 import ProductDetailPage from "../../../pages/ProductDetailPage";
 import Protected from "./Protected";
+import PageNotFound from "../../../pages/404";
+import OrderSuccess from "../../../pages/OrderSuccess";
  export const router = createBrowserRouter([
   {
     path: "/",
@@ -32,5 +34,13 @@ import Protected from "./Protected";
   {
     path: "product-detail/:id",
     element: <Protected><ProductDetailPage /> </Protected>,
+  },
+  {
+    path: `order-success/:id`,
+    element: <OrderSuccess/>,
+  },
+  {
+    path: "*",
+    element: <PageNotFound/>,
   },
 ]);

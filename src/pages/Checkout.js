@@ -8,6 +8,7 @@ import { Link, Navigate } from "react-router-dom";
 import { deleteItemFromCartAsync, updateCartAsync } from "../features/cart/cartSlice";
 import { useForm } from "react-hook-form";
 import { updateUserAddressAsync } from "../features/auth/authSlice";
+import { createOrderAsync } from "../features/orders/orderSlice";
 
 
 // const products = [
@@ -68,6 +69,7 @@ const Checkout = () => {
     const [open, setOpen] = useState(true);
     const cartItems = useSelector((state) => state.cart.cartItems);
     const user = useSelector((state) => state.auth.loggedInUser);
+    const currentOrder = useSelector((state) => state.orders.currentOrder);
     const [selectedAddress, setSelectedAddress] = useState(null)
     const [paymentMethod, setPaymentMethod] = useState("cash")
     const dispatch = useDispatch();
@@ -94,12 +96,24 @@ const Checkout = () => {
         setSelectedAddress(user.addresses[e.target.value])
     }
     const handlePayment = e => {
-        console.log('payment',e.target.value)
         setPaymentMethod(e.target.value)
     }
+    const handleOrder = e => {
+        let order = {items:cartItems,totalAmount,totalItems,user,paymentMethod,selectedAddress}
+        console.log("create order",createOrderAsync(order))
+        dispatch(createOrderAsync(order))
+        // TODO:Navigate to success page
+        // TODO:Clear cart 
+        // TODO:On server change the number of stock of items      
+
+        
+    }
+
+
     return (
         <>
             {!cartItems.length && <Navigate to="/" replace={true} />}
+            {currentOrder && <Navigate to={`/order-success/${currentOrder?.id}`} replace={true} />}
 
             {cartItems.length > 0 && <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-5">
@@ -438,12 +452,12 @@ const Checkout = () => {
                                     Shipping and taxes calculated at checkout.
                                 </p>
                                 <div className="mt-6">
-                                    <Link
-                                        to="/checkout"
-                                        className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
+                                    <div
+                                    onClick={handleOrder}
+                                        className="flex items-center cursor-pointer justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
                                     >
-                                        Checkout
-                                    </Link>
+                                        Order Now
+                                    </div>
                                 </div>
                                 <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                                     <p>
