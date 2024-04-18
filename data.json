@@ -2436,58 +2436,58 @@
     {
       "id": "7339",
       "email": "test@gmail.com",
-      "password": "Test@123"
+      "password": "Test@123",
+      "addresses": []
     },
     {
       "id": "d86a",
       "email": "test2@gmail.com",
-      "password": "Test@123"
+      "password": "Test@123",
+      "addresses": [
+        {
+          "first-name": "Abhay",
+          "last-name": "Raj",
+          "email": "abhay18d@gmail.com",
+          "country": "India",
+          "phone": "07727831882",
+          "street": "Sarnath",
+          "city": "Varanasi",
+          "state": "Uttar Pradesh",
+          "pinCode": "555555"
+        },
+     
+        {
+          "first-name": "Abhay",
+          "last-name": "Raj",
+          "email": "abhay18d@gmail.com",
+          "country": "India",
+          "phone": "07727831882",
+          "street": "Sarnath",
+          "city": "Varanasi",
+          "state": "Uttar Pradesh",
+          "pinCode": "555"
+        },
+        {
+          "first-name": "Abhay",
+          "last-name": "Raj",
+          "email": "abhay18d@gmail.com",
+          "country": "India",
+          "phone": "07727831882",
+          "street": "Sarnath",
+          "city": "Varanasi",
+          "state": "Uttar Pradesh",
+          "pinCode": "1111"
+        }
+      ]
     },
     {
       "id": "2f77",
       "email": "test3@gmail.com",
-      "password": "Test@123"
+      "password": "Test@123",
+      "addresses": []
     }
   ],
   "cart": [
-    {
-      "id": "9",
-      "title": "Infinix INBOOK",
-      "description": "Infinix Inbook X1 Ci3 10th 8GB 256GB 14 Win10 Grey – 1 Year Warranty",
-      "price": 1099,
-      "discountPercentage": 11.83,
-      "rating": 4.54,
-      "stock": 96,
-      "brand": "Infinix",
-      "category": "laptops",
-      "thumbnail": "https://cdn.dummyjson.com/product-images/9/thumbnail.jpg",
-      "images": [
-        "https://cdn.dummyjson.com/product-images/9/1.jpg",
-        "https://cdn.dummyjson.com/product-images/9/2.png",
-        "https://cdn.dummyjson.com/product-images/9/3.png",
-        "https://cdn.dummyjson.com/product-images/9/4.jpg",
-        "https://cdn.dummyjson.com/product-images/9/thumbnail.jpg"
-      ],
-      "quantity": 3,
-      "userId": "7339"
-    },
-    {
-      "id": "3",
-      "title": "Samsung Universe 9",
-      "description": "Samsung's new variant which goes beyond Galaxy to the Universe",
-      "price": 1249,
-      "discountPercentage": 15.46,
-      "rating": 4.09,
-      "stock": 36,
-      "brand": "Samsung",
-      "category": "smartphones",
-      "thumbnail": "https://cdn.dummyjson.com/product-images/3/thumbnail.jpg",
-      "images": [
-        "https://cdn.dummyjson.com/product-images/3/1.jpg"
-      ],
-      "quantity": 1,
-      "userId": "7339"
-    },
     {
       "id": "8",
       "title": "Microsoft Surface Laptop 4",
@@ -2528,6 +2528,23 @@
       ],
       "quantity": 1,
       "userId": "7339"
+    },
+    {
+      "id": "bc61",
+      "title": "Samsung Universe 9",
+      "description": "Samsung's new variant which goes beyond Galaxy to the Universe",
+      "price": 1249,
+      "discountPercentage": 15.46,
+      "rating": 4.09,
+      "stock": 36,
+      "brand": "Samsung",
+      "category": "smartphones",
+      "thumbnail": "https://cdn.dummyjson.com/product-images/3/thumbnail.jpg",
+      "images": [
+        "https://cdn.dummyjson.com/product-images/3/1.jpg"
+      ],
+      "quantity": 1,
+      "userId": "d86a"
     }
   ]
 }

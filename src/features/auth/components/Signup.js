@@ -12,7 +12,7 @@ export default function Signup() {
   const navigate = useNavigate()
   const dispatch = useDispatch();
   const formSubmit =data =>{
-    dispatch(createUserAsync({email:data.email,password:data.password}))
+    dispatch(createUserAsync({email:data.email,password:data.password,addresses:[]}))
     navigate("/login")
   }
 

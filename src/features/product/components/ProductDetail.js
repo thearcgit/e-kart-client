@@ -43,9 +43,11 @@ export default function ProductDetail() {
 
   const handleCart = (e) => {
     e.preventDefault()
+    let newItem = {...product,quantity:1,userId:user.id}
+    delete newItem["id"]
 
     console.log('items',{product,quantity:1,user:user})
-    dispatch(addToCartAsync({...product,quantity:1,userId:user.id}))
+    dispatch(addToCartAsync(newItem))
 
   }
 
