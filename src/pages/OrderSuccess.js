@@ -1,13 +1,30 @@
-import React from 'react'
-import { Link,Navigate, useParams } from 'react-router-dom'
-import { myOrders } from '../features/orders/orderSlice'
+import React, { useEffect } from 'react'
+import { Link, Navigate, useParams } from 'react-router-dom'
+import { myOrders, resetOrder } from '../features/orders/orderSlice'
+import { resetCartAsync } from '../features/cart/cartSlice'
+import {useDispatch,useSelector} from "react-redux"
 
 const OrderSuccess = () => {
-    const order = useParams()
+  const order = useParams()
+  const user = useSelector(state => state.auth.loggedInUser)
+  const cartItems = useSelector(state => state.cart.cartItems)
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    if(cartItems && cartItems.length > 0){
+
+      // clear cart
+      dispatch(resetCartAsync(user))
+      // clear current order
+      dispatch(resetOrder())
+    }
+
+  }, [dispatch,user.id])
+
   return (
     <>
-    {!order.id && <Navigate to='/' replace={true} />}
-    <main className="grid min-h-full place-items-center bg-white px-6 py-24 sm:py-32 lg:px-8">
+      {!order.id && <Navigate to='/' replace={true} />}
+      <main className="grid min-h-full place-items-center bg-white px-6 py-24 sm:py-32 lg:px-8">
         <div className="text-center">
           <p className="text-base font-semibold text-indigo-600">Order placed successfully</p>
           <h1 className="mt-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-5xl">Order Id is {order?.id}</h1>
@@ -25,7 +42,7 @@ const OrderSuccess = () => {
           </div>
         </div>
       </main>
-      
+
     </>
   )
 }

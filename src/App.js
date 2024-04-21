@@ -15,7 +15,6 @@ function App() {
   const dispatch = useDispatch()
   useEffect(() => {
     if(loggedInUser){
-      console.log('app useEffect',loggedInUser)
 
       dispatch(fetchItemsByUserIdAsync(loggedInUser.id))
     }

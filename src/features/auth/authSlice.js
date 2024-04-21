@@ -10,7 +10,7 @@ const initialState = {
 
 
 export const createUserAsync = createAsyncThunk(
-  'users/createUsers',
+  'auth/createUsers',
   async (userData) => {
     const response = await createUser(userData);
     // The value we return becomes the `fulfilled` action payload
@@ -18,7 +18,7 @@ export const createUserAsync = createAsyncThunk(
   }
 );
 export const fetchUserAsync = createAsyncThunk(
-  'user/fetchUser',
+  'auth/fetchUser',
   async (loginData) => {
     const response = await fetchUser(loginData);
     // The value we return becomes the `fulfilled` action payload
@@ -26,7 +26,7 @@ export const fetchUserAsync = createAsyncThunk(
   }
 );
 export const updateUserAddressAsync = createAsyncThunk(
-  'user/updateUserAddress',
+  'auth/updateUserAddress',
   async (update) => {
     const response = await updateUserAddress(update);
     // The value we return becomes the `fulfilled` action payload
@@ -35,7 +35,7 @@ export const updateUserAddressAsync = createAsyncThunk(
 );
 
 export const authSlice = createSlice({
-  name: 'users',
+  name: 'auth',
   initialState,
   // The `reducers` field lets us define reducers and generate associated actions
   reducers: {
@@ -60,7 +60,6 @@ export const authSlice = createSlice({
         state.status = 'loading';
       })
       .addCase(fetchUserAsync.fulfilled, (state, action) => {
-      console.log("data",state,action)
         state.status = 'idle';
         state.loggedInUser = action.payload[0];
       })
@@ -72,7 +71,6 @@ export const authSlice = createSlice({
         state.status = 'loading';
       })
       .addCase(updateUserAddressAsync.fulfilled, (state, action) => {
-        console.log('update address',action)
         state.status = 'idle';
           state.loggedInUser = action.payload;
         })

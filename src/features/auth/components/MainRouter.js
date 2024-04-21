@@ -10,6 +10,8 @@ import ProductDetailPage from "../../../pages/ProductDetailPage";
 import Protected from "./Protected";
 import PageNotFound from "../../../pages/404";
 import OrderSuccess from "../../../pages/OrderSuccess";
+import UserOrders from "../../user/components/UserOrders";
+import UserOrdersPage from "../../../pages/UserOrdersPage";
  export const router = createBrowserRouter([
   {
     path: "/",
@@ -34,6 +36,10 @@ import OrderSuccess from "../../../pages/OrderSuccess";
   {
     path: "product-detail/:id",
     element: <Protected><ProductDetailPage /> </Protected>,
+  },
+  {
+    path: "orders",
+    element: <Protected><UserOrdersPage /> </Protected>,
   },
   {
     path: `order-success/:id`,

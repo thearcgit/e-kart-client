@@ -22,9 +22,9 @@ export const orderSlice = createSlice({
   initialState,
   // The `reducers` field lets us define reducers and generate associated actions
   reducers: {
-    increment: (state) => {
+    resetOrder: (state) => {
 
-      state.value += 1;
+      state.currentOrder = null;
     },
    
   },
@@ -43,7 +43,7 @@ export const orderSlice = createSlice({
   },
 });
 
-export const { increment } = orderSlice.actions;
+export const { resetOrder } = orderSlice.actions;
 
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of

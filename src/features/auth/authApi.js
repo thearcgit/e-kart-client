@@ -21,7 +21,6 @@ export function fetchUser(loginData) {
   return new Promise(async (resolve,reject) => {
     try {
       let res = await axios.get("http://localhost:8080/users/?email="+email,);
-      console.log('res',res)
       if(res.data.length){
         if(password === res.data[0].password) resolve(res.data)
         else reject({message:`wrong credentials.`})

@@ -11,58 +11,6 @@ import { updateUserAddressAsync } from "../features/auth/authSlice";
 import { createOrderAsync } from "../features/orders/orderSlice";
 
 
-// const products = [
-//     {
-//         id: 1,
-//         name: 'Throwback Hip Bag',
-//         href: '#',
-//         color: 'Salmon',
-//         price: '$90.00',
-//         quantity: 1,
-//         imageSrc: 'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-01.jpg',
-//         imageAlt: 'Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt.',
-//     },
-//     {
-//         id: 2,
-//         name: 'Medium Stuff Satchel',
-//         href: '#',
-//         color: 'Blue',
-//         price: '$32.00',
-//         quantity: 1,
-//         imageSrc: 'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-02.jpg',
-//         imageAlt:
-//             'Front of satchel with blue canvas body, black straps and handle, drawstring top, and front zipper pouch.',
-//     },
-//     // More products...
-// ]
-
-
-const addresses = [
-    {
-        name: "Shresth ",
-        age: 28,
-        email: "shresth@gmail.com",
-        role: "Developer",
-        street: "Pacheri",
-        phone: 9344489675,
-        pincode: 2345,
-        city: "Jhunjhunu",
-        state: "Rajasthan",
-    },
-    {
-        name: "Gopal ",
-        age: 27,
-        email: "gopal@gmail.com",
-        role: "POP Contracter",
-        street: "not applicable",
-        phone: 8344489898,
-        pincode: 2345,
-        city: "Ahmedabad",
-        state: "Gujraat",
-    },
-]
-
-
 
 const Checkout = () => {
 
@@ -70,7 +18,7 @@ const Checkout = () => {
     const cartItems = useSelector((state) => state.cart.cartItems);
     const user = useSelector((state) => state.auth.loggedInUser);
     const currentOrder = useSelector((state) => state.orders.currentOrder);
-    const [selectedAddress, setSelectedAddress] = useState(null)
+    const [selectedAddress, setSelectedAddress] = useState(user.addresses.length > 0 ? user.addresses[0] : null)
     const [paymentMethod, setPaymentMethod] = useState("cash")
     const dispatch = useDispatch();
     const totalAmount = cartItems.reduce((amount, item) => item.price * item.quantity + amount, 0);
@@ -86,6 +34,7 @@ const Checkout = () => {
 
         dispatch(deleteItemFromCartAsync(item))
     }
+    console.log('addresses', user, selectedAddress)
 
     const handleForm = (data) => {
         dispatch(updateUserAddressAsync({ ...user, addresses: [...user.addresses, data] }))
@@ -99,14 +48,14 @@ const Checkout = () => {
         setPaymentMethod(e.target.value)
     }
     const handleOrder = e => {
-        let order = {items:cartItems,totalAmount,totalItems,user,paymentMethod,selectedAddress}
-        console.log("create order",createOrderAsync(order))
+        if (!selectedAddress) return alert('Please select an address')
+        let order = { items: cartItems, totalAmount, totalItems, user, paymentMethod, selectedAddress,status:"Pending" }
         dispatch(createOrderAsync(order))
         // TODO:Navigate to success page
         // TODO:Clear cart 
         // TODO:On server change the number of stock of items      
 
-        
+
     }
 
 
@@ -129,14 +78,14 @@ const Checkout = () => {
 
                                     <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                                         <div className="sm:col-span-3">
-                                            <label htmlFor="first-name" className="block text-sm font-medium leading-6 text-gray-900">
+                                            <label htmlFor="firstName" className="block text-sm font-medium leading-6 text-gray-900">
                                                 First name
                                             </label>
                                             <div className="mt-2">
                                                 <input
                                                     type="text"
-                                                    {...register("first-name", { required: "First name is required." })}
-                                                    id="first-name"
+                                                    {...register("firstName", { required: "First name is required." })}
+                                                    id="firstName"
                                                     autoComplete="given-name"
                                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                                 />
@@ -144,15 +93,15 @@ const Checkout = () => {
                                         </div>
 
                                         <div className="sm:col-span-3">
-                                            <label htmlFor="last-name" className="block text-sm font-medium leading-6 text-gray-900">
+                                            <label htmlFor="lastName" className="block text-sm font-medium leading-6 text-gray-900">
                                                 Last name
                                             </label>
                                             <div className="mt-2">
                                                 <input
                                                     type="text"
-                                                    {...register("last-name", { required: "Last name is required." })}
-                                                    id="last-name"
-                                                    autoComplete="family-name"
+                                                    {...register("lastName", { required: "Last name is required." })}
+                                                    id="lastName"
+                                                    autoComplete="lastName"
                                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                                 />
                                             </div>
@@ -281,7 +230,7 @@ const Checkout = () => {
                                 </div>
 
                                 <div className="border-b border-gray-900/10 pb-12">
-                                    <h2 className="text-base font-semibold leading-7 text-gray-900">Address</h2>
+                                    <h2 className="text-base font-semibold leading-7 text-gray-900">Addresses</h2>
                                     <p className="mt-1 text-sm leading-6 text-gray-600">
                                         Choose from existing addresses
                                     </p>
@@ -290,12 +239,14 @@ const Checkout = () => {
                                             <li key={`${address?.email}${i}`} className="flex justify-between px-4 gap-x-6 py-5 border-solid border-2 border-gray-200">
                                                 <div className="flex min-w-0 gap-x-4">
                                                     <div className="flex items-center gap-x-3">
+                                                        {console.log('selceted address checking', address === selectedAddress, address)}
                                                         <input
                                                             id={address?.email}
                                                             name="address"
                                                             type="radio"
                                                             onChange={handleAddress}
                                                             value={i}
+                                                            checked={address === selectedAddress}
                                                             className="h-4 w-4 border-gray-300 cursor-pointer text-indigo-600 focus:ring-indigo-600"
                                                         />
                                                         {/* <label htmlFor="cash" className="block text-sm font-medium leading-6 text-gray-900">
@@ -304,8 +255,8 @@ const Checkout = () => {
                                                     </div>
                                                     {/* <img className="h-12 w-12 flex-none rounded-full bg-gray-50" src={address?.imageUrl} alt="" /> */}
                                                     <div className="min-w-0 flex-auto">
-                                                        <p className="text-sm font-semibold leading-6 text-gray-900">{address.name}</p>
-                                                        <p className="mt-1 truncate text-xs leading-5 text-gray-500">{address?.email}</p>
+                                                        <p className="text-sm font-semibold leading-6 text-gray-900">{address.firstName} {address.lastName} </p>
+                                                        <p className="mt-1 truncate text-xs leading-5 text-gray-500">{address?.email} </p>
                                                         <p className="mt-1 truncate text-xs leading-5 text-gray-500">Phone: {address?.phone}</p>
                                                     </div>
                                                 </div>
@@ -313,7 +264,7 @@ const Checkout = () => {
                                                     {/* <p className="text-sm leading-6 text-gray-900">{address?.role}</p> */}
                                                     <p className="mt-1 truncate text-xs leading-5 text-gray-500">{address?.street}</p>
                                                     <p className="mt-1 truncate text-xs leading-5 text-gray-500">{address?.city}, {address?.state}</p>
-                                                    <p className="mt-1 truncate text-xs leading-5 text-gray-500">{address?.pincode}</p>
+                                                    <p className="mt-1 truncate text-xs leading-5 text-gray-500">pin: {address?.pinCode}</p>
                                                     {/* <span> <p className="mt-1 truncate text-xs leading-5 text-gray-500">{address?.state}</p></span> */}
 
                                                 </div>
@@ -333,7 +284,7 @@ const Checkout = () => {
                                                         name="payment"
                                                         type="radio"
                                                         onChange={handlePayment}
-                                                        value="cash" 
+                                                        value="cash"
                                                         checked={paymentMethod === "cash"}
                                                         className="h-4 w-4 border-gray-300 cursor-pointer text-indigo-600 focus:ring-indigo-600"
                                                     />
@@ -348,7 +299,7 @@ const Checkout = () => {
                                                         type="radio"
                                                         onChange={handlePayment}
                                                         value="card"
-                                                        checked={paymentMethod === "card" }
+                                                        checked={paymentMethod === "card"}
                                                         className="h-4 w-4 border-gray-300 cursor-pointer text-indigo-600 focus:ring-indigo-600"
                                                     />
                                                     <label htmlFor="card" className="block text-sm font-medium leading-6 text-gray-900">
@@ -453,7 +404,7 @@ const Checkout = () => {
                                 </p>
                                 <div className="mt-6">
                                     <div
-                                    onClick={handleOrder}
+                                        onClick={handleOrder}
                                         className="flex items-center cursor-pointer justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
                                     >
                                         Order Now
