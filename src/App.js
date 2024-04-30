@@ -9,6 +9,7 @@ import SignupPage from './pages/SignupPage';
 import {router} from './features/auth/components/MainRouter';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchItemsByUserIdAsync } from './features/cart/cartSlice';
+import { fetchLoggedInUserAsync } from './features/user/userSlice';
 
 function App() {
   const loggedInUser = useSelector(state => state.auth.loggedInUser)
@@ -17,6 +18,7 @@ function App() {
     if(loggedInUser){
 
       dispatch(fetchItemsByUserIdAsync(loggedInUser.id))
+      dispatch(fetchLoggedInUserAsync(loggedInUser.id))
     }
   },[dispatch,loggedInUser])
   return (

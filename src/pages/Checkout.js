@@ -7,8 +7,8 @@ import { XMarkIcon } from "@heroicons/react/24/outline";
 import { Link, Navigate } from "react-router-dom";
 import { deleteItemFromCartAsync, updateCartAsync } from "../features/cart/cartSlice";
 import { useForm } from "react-hook-form";
-import { updateUserAddressAsync } from "../features/auth/authSlice";
 import { createOrderAsync } from "../features/orders/orderSlice";
+import { selectUserInfo, updateUserAsync } from "../features/user/userSlice";
 
 
 
@@ -16,7 +16,7 @@ const Checkout = () => {
 
     const [open, setOpen] = useState(true);
     const cartItems = useSelector((state) => state.cart.cartItems);
-    const user = useSelector((state) => state.auth.loggedInUser);
+    const user = useSelector(selectUserInfo);
     const currentOrder = useSelector((state) => state.orders.currentOrder);
     const [selectedAddress, setSelectedAddress] = useState(user.addresses.length > 0 ? user.addresses[0] : null)
     const [paymentMethod, setPaymentMethod] = useState("cash")
@@ -34,10 +34,9 @@ const Checkout = () => {
 
         dispatch(deleteItemFromCartAsync(item))
     }
-    console.log('addresses', user, selectedAddress)
 
     const handleForm = (data) => {
-        dispatch(updateUserAddressAsync({ ...user, addresses: [...user.addresses, data] }))
+        dispatch(updateUserAsync({ ...user, addresses: [...user.addresses, data] }))
         reset()
     }
 
@@ -49,7 +48,7 @@ const Checkout = () => {
     }
     const handleOrder = e => {
         if (!selectedAddress) return alert('Please select an address')
-        let order = { items: cartItems, totalAmount, totalItems, user, paymentMethod, selectedAddress,status:"Pending" }
+        let order = { items: cartItems, totalAmount, totalItems, user, paymentMethod, selectedAddress, status: "Pending" }
         dispatch(createOrderAsync(order))
         // TODO:Navigate to success page
         // TODO:Clear cart 

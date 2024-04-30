@@ -6,7 +6,7 @@ export function createUser(userData) {
   return new Promise(async (resolve) => {
     try {
       let res = await axios.post("http://localhost:8080/users",
-         userData ,
+        userData,
         { headers: { "Content-Type": "application/json" } },
       );
       resolve(res.data);
@@ -17,30 +17,26 @@ export function createUser(userData) {
   });
 }
 export function fetchUser(loginData) {
-  const {email,password} = loginData
-  return new Promise(async (resolve,reject) => {
+  const { email, password } = loginData
+  return new Promise(async (resolve, reject) => {
     try {
-      let res = await axios.get("http://localhost:8080/users/?email="+email,);
-      if(res.data.length){
-        if(password === res.data[0].password) resolve(res.data)
-        else reject({message:`wrong credentials.`})
-    }else{
-      reject({message:`User not found.`})
+      let res = await axios.get("http://localhost:8080/users/?email=" + email);
+      if (res.data.length) {
+        if (password === res.data[0].password) resolve(res.data)
+        else reject({ message: `wrong credentials.` })
+      } else {
+        reject({ message: `User not found.` })
+      }
+    } catch (error) {
+      console.error("Error fetching count:", error);
+      resolve(null);
     }
-  } catch (error) {
-    console.error("Error fetching count:", error);
-    resolve(null);
-  }
-});
+  });
 }
-export function updateUserAddress(update) {
-  return new Promise(async (resolve) => {
+export function signout(loginData) {
+  return new Promise(async (resolve, reject) => {
     try {
-      let res = await axios.patch("http://localhost:8080/users/"+update.id,
-         update ,
-        { headers: { "Content-Type": "application/json" } },
-      );
-      resolve(res.data);
+      resolve({data:"Signed out successfully"})
     } catch (error) {
       console.error("Error fetching count:", error);
       resolve(null);

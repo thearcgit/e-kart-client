@@ -10,40 +10,54 @@ import ProductDetailPage from "../../../pages/ProductDetailPage";
 import Protected from "./Protected";
 import PageNotFound from "../../../pages/404";
 import OrderSuccess from "../../../pages/OrderSuccess";
-import UserOrders from "../../user/components/UserOrders";
 import UserOrdersPage from "../../../pages/UserOrdersPage";
+import UserProfilePage from "../../../pages/UserProfilePage";
+import Signout from "./Signout";
+import ForgotPasswordPage from "../../../pages/ForgotPasswordPage";
  export const router = createBrowserRouter([
   {
     path: "/",
     element: <Protected><Home /> </Protected>,
   },
   {
-    path: "login",
+    path: "/login",
     element: <LoginPage />,
   },
   {
-    path: "signup",
+    path: "/signup",
     element: <SignupPage />,
   },
   {
-    path: "cart",
+    path: "/cart",
     element:<Protected><CartPage /> </Protected> ,
   },
   {
-    path: "checkout",
+    path: "/checkout",
     element: <Protected><Checkout /> </Protected>,
   },
   {
-    path: "product-detail/:id",
+    path: "/product-detail/:id",
     element: <Protected><ProductDetailPage /> </Protected>,
   },
   {
-    path: "orders",
+    path: "/orders",
     element: <Protected><UserOrdersPage /> </Protected>,
   },
   {
-    path: `order-success/:id`,
-    element: <OrderSuccess/>,
+    path: "/profile",
+    element: <Protected><UserProfilePage /> </Protected>,
+  },
+  {
+    path: `/order-success/:id`,
+    element: <Protected><OrderSuccess/></Protected>,
+  },
+  {
+    path: `/Signout`,
+    element: <Protected><Signout/></Protected>,
+  },
+  {
+    path: `/forgotPassword`,
+    element: <ForgotPasswordPage />,
   },
   {
     path: "*",

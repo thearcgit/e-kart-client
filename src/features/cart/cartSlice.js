@@ -8,7 +8,6 @@ const initialState = {
 
 };
 
-
 export const addToCartAsync = createAsyncThunk(
   'items/addToCart',
   async (itemData) => {
