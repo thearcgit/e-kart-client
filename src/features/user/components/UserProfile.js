@@ -53,6 +53,9 @@ const UserProfile = () => {
           <h1 className="text-xl font-bold tracking-tight text-red-900 my-5">
             Email: {user?.email}
           </h1>
+          {user.role === "admin" && <h1 className="text-xl font-bold tracking-tight text-red-900 my-5">
+            Role: {user?.role}
+          </h1>}
         </div>
           <button
             type="submit"

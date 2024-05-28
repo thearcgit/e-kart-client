@@ -1825,7 +1825,7 @@
       "id": "100",
       "title": "Crystal chandelier maria theresa for 12 light",
       "description": "Crystal chandelier maria theresa for 12 light",
-      "price": 47,
+      "price": 50,
       "discountPercentage": 16,
       "rating": 4.74,
       "stock": 133,
@@ -1838,6 +1838,24 @@
         "https://cdn.dummyjson.com/product-images/100/3.jpg",
         "https://cdn.dummyjson.com/product-images/100/thumbnail.jpg"
       ]
+    },
+    {
+      "id": "d4ef",
+      "title": "Product 1",
+      "description": "new product",
+      "price": 499,
+      "discountPercentage": 8,
+      "stock": 10,
+      "category": "smartphones",
+      "brand": "OPPO",
+      "thumbnail": "",
+      "images": [
+        "",
+        "",
+        "",
+        ""
+      ],
+      "deleted": true
     }
   ],
   "brands": [
@@ -2477,13 +2495,21 @@
           "state": "Uttar Pradesh",
           "pinCode": "555555"
         }
-      ]
+      ],
+      "role": "user"
     },
     {
       "id": "2f77",
       "email": "test3@gmail.com",
       "password": "Test@123",
       "addresses": []
+    },
+    {
+      "id": "1b6b",
+      "email": "admin@gmail.com",
+      "password": "Test@123",
+      "addresses": [],
+      "role": "admin"
     }
   ],
   "cart": [

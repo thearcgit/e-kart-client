@@ -34,16 +34,50 @@ export function fetchProductsByFilters(filter, sort, pagination) {
     try {
       let res = await axios.get(`http://localhost:8080/products/?${queryString}`);
 
-        // Filter for Pagination..............
+      // Filter for Pagination..............
       let products = res.data.slice((_page - 1) * _limit, _page * _limit);
       let totalItems = res?.data.length
 
-      resolve({products:products, totalItems:+totalItems});
+      resolve({ products: products, totalItems: +totalItems });
     } catch (error) {
       console.error("Error fetching count:", error);
       resolve(null);
     }
   });
+}
+
+export const addNewProduct = (product) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let res = await axios.post(`http://localhost:8080/products`,
+        product,
+        { headers: { "Content-Type": "application/json" } },
+      )
+      if (res.status === 201) resolve(res.data)
+    } catch (error) {
+      console.log(error)
+
+    }
+  })
+}
+
+export const updateProduct = (product) => {
+  return new Promise(async(resolve, reject) => {
+    try {
+      console.log('product id',product,product.id)
+      let res =await axios.patch(`http://localhost:8080/products/${product.id}`,
+        product,
+        { headers: { "Content-Type": "application/json" } },
+    )
+    if(res.status === 200){
+
+      resolve(res.data)
+    }
+    } catch (error) {
+      console.log(error)
+
+    }
+  })
 }
 
 export function fetchProductById(id) {

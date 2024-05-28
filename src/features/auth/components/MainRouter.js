@@ -14,6 +14,11 @@ import UserOrdersPage from "../../../pages/UserOrdersPage";
 import UserProfilePage from "../../../pages/UserProfilePage";
 import Signout from "./Signout";
 import ForgotPasswordPage from "../../../pages/ForgotPasswordPage";
+import AdminProtected from "./AdminProtected copy";
+import AdminHome from "../../../pages/AdminHome";
+import AdminProductDetail from "../../admin/components/AdminProductDetail";
+import AdminProductFormPage from "../../../pages/AdminProductFormPage";
+import AdminOrdersPage from "../../../pages/AdminOrdersPage";
  export const router = createBrowserRouter([
   {
     path: "/",
@@ -58,6 +63,30 @@ import ForgotPasswordPage from "../../../pages/ForgotPasswordPage";
   {
     path: `/forgotPassword`,
     element: <ForgotPasswordPage />,
+  },
+  {
+    path: `/admin`,
+    element: <AdminProtected><AdminHome /></AdminProtected>,
+  },
+  {
+    path: `/admin/product-detail/:id`,
+    element: <AdminProtected><AdminProductDetail /></AdminProtected>,
+  },
+  {
+    path: `/admin/product-form`,
+    element: <AdminProtected><AdminProductFormPage /></AdminProtected>,
+  },
+  {
+    path: `/admin/product-form/:id`,
+    element: <AdminProtected><AdminProductFormPage /></AdminProtected>,
+  },
+  {
+    path: `/admin/product-form`,
+    element: <AdminProtected><AdminProductFormPage /></AdminProtected>,
+  },
+  {
+    path: `/admin/orders`,
+    element: <AdminProtected><AdminOrdersPage /></AdminProtected>,
   },
   {
     path: "*",
