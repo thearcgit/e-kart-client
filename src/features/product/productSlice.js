@@ -65,9 +65,7 @@ export const upadteProductAsync = createAsyncThunk(
   `product/updateProduct`,
   async(product) => {
 
-    console.log('product update before',product)
     const res =await updateProduct(product)
-    console.log('product update',product,res)
     return res
   }
 
@@ -136,7 +134,6 @@ export const productSlice = createSlice({
         state.status = 'loading'
       })
       .addCase(upadteProductAsync.fulfilled, (state, action) => {
-        console.log('action',action,action.payload)
         state.status = 'idle';
         let index = state.allProducts.findIndex(product => product.id === action.payload.id)
         state.allProducts[index] = action.payload

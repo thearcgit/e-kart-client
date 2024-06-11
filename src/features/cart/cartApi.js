@@ -40,9 +40,7 @@ export function deleteItemFromCart(item) {
   return new Promise(async (resolve) => {
     try {
 
-      console.log('delete function')
       let res = await axios.delete(`http://localhost:8080/cart/${item.id}`)
-      console.log('deleted',item,res)
     
       resolve({data:{id:item.id}})
     } catch (error) {

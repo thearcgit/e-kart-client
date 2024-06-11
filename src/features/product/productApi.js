@@ -64,7 +64,6 @@ export const addNewProduct = (product) => {
 export const updateProduct = (product) => {
   return new Promise(async(resolve, reject) => {
     try {
-      console.log('product id',product,product.id)
       let res =await axios.patch(`http://localhost:8080/products/${product.id}`,
         product,
         { headers: { "Content-Type": "application/json" } },

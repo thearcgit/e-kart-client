@@ -4,7 +4,7 @@ import { RadioGroup } from "@headlessui/react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProductByIdAsync, selectedProductById } from "../productSlice";
 import { useParams } from "react-router-dom";
-import { addToCartAsync } from "../../cart/cartSlice";
+import { addToCartAsync, selectCartItems } from "../../cart/cartSlice";
 import { selectUserInfo } from "../../user/userSlice";
 
 const colors = [
@@ -24,11 +24,11 @@ const sizes = [
 ];
 
 const highlights = [
-    'Hand cut and sewn locally',
-    'Dyed with our proprietary colors',
-    'Pre-washed & pre-shrunk',
-    'Ultra-soft 100% cotton',
-  ]
+  'Hand cut and sewn locally',
+  'Dyed with our proprietary colors',
+  'Pre-washed & pre-shrunk',
+  'Ultra-soft 100% cotton',
+]
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -39,22 +39,28 @@ export default function ProductDetail() {
   const [selectedSize, setSelectedSize] = useState(sizes[2]);
   const user = useSelector(selectUserInfo)
   const product = useSelector(selectedProductById);
+  const cartItems = useSelector(selectCartItems);
   const dispatch = useDispatch()
   const params = useParams()
 
   const handleCart = (e) => {
     e.preventDefault()
-    let newItem = {...product,quantity:1,userId:user.id}
-    delete newItem["id"]
+    const index = cartItems.findIndex(item => item.productId === product.id)
+    if (index < 0) {
+      let newItem = { ...product, productId: product.id, quantity: 1, userId: user.id }
+      delete newItem["id"]
+      dispatch(addToCartAsync(newItem))
+    } else {
+      console.log('product already in cart.')
+    }
 
-    dispatch(addToCartAsync(newItem))
 
   }
 
 
   useEffect(() => {
     dispatch(fetchProductByIdAsync(params.id))
-  }, [params.id,dispatch]);
+  }, [params.id, dispatch]);
 
   return (
     <div className="bg-white">

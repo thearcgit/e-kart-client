@@ -238,7 +238,6 @@ const Checkout = () => {
                                             <li key={`${address?.email}${i}`} className="flex justify-between px-4 gap-x-6 py-5 border-solid border-2 border-gray-200">
                                                 <div className="flex min-w-0 gap-x-4">
                                                     <div className="flex items-center gap-x-3">
-                                                        {console.log('selceted address checking', address === selectedAddress, address)}
                                                         <input
                                                             id={address?.email}
                                                             name="address"
