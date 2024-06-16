@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { createUser, fetchUser, signout, updateUserAddress } from './authApi';
+import { createUser, loginUser, signout, updateUserAddress } from './authApi';
 
 const initialState = {
   user: null,
@@ -17,12 +17,19 @@ export const createUserAsync = createAsyncThunk(
     return response;
   }
 );
-export const fetchUserAsync = createAsyncThunk(
-  'auth/fetchUser',
-  async (loginData) => {
-    const response = await fetchUser(loginData);
-    // The value we return becomes the `fulfilled` action payload
-    return response;
+export const loginUserAsync = createAsyncThunk(
+  'auth/loginUser',
+  async (loginData,{rejectWithValue}) => {
+    try {
+      
+      const response = await loginUser(loginData);
+      // The value we return becomes the `fulfilled` action payload
+      return response;
+      } catch (error) {
+      console.log('login res',error)
+      return rejectWithValue(error)
+      
+    }
   }
 );
 export const signoutAsync = createAsyncThunk(
@@ -57,16 +64,16 @@ export const authSlice = createSlice({
       state.status = 'idle';
         state.user = action.payload;
       })
-      .addCase(fetchUserAsync.pending, (state) => {
+      .addCase(loginUserAsync.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(fetchUserAsync.fulfilled, (state, action) => {
+      .addCase(loginUserAsync.fulfilled, (state, action) => {
         state.status = 'idle';
-        state.loggedInUser = action.payload[0];
+        state.loggedInUser = action.payload;
       })
-      .addCase(fetchUserAsync.rejected, (state, action) => {
+      .addCase(loginUserAsync.rejected, (state, action) => {
         state.status = 'idle';
-        state.error = action.error;
+        state.error = action.payload;
       })
       .addCase(signoutAsync.pending, (state) => {
         state.status = 'loading';

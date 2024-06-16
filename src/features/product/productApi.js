@@ -26,17 +26,16 @@ export function fetchProductsByFilters(filter, sort, pagination) {
     // sort = {_sort:option.sort, _order:option.order}
     queryString += `${key}=${sort[key]}&`;
   }
-  // for (let key in pagination) {
-  //   queryString += `${key}=${pagination[key]}&`
-  // }
-  let { _page, _limit } = pagination;
+  for (let key in pagination) {
+    queryString += `${key}=${pagination[key]}&`
+  }
   return new Promise(async (resolve) => {
     try {
       let res = await axios.get(`http://localhost:8080/products/?${queryString}`);
 
       // Filter for Pagination..............
-      let products = res.data.slice((_page - 1) * _limit, _page * _limit);
-      let totalItems = res?.data.length
+      let products = res.data;
+      let totalItems = await res?.headers.get("X-Total-Count")
 
       resolve({ products: products, totalItems: +totalItems });
     } catch (error) {
@@ -107,6 +106,7 @@ export function fetchBrands() {
   return new Promise(async (resolve) => {
     try {
       let res = await axios.get("http://localhost:8080/brands");
+      console.log('brands',res)
       resolve(res);
     } catch (error) {
       console.error("Error fetching count:", error);

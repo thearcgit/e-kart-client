@@ -77,7 +77,7 @@ export default function ProductList() {
   const handleSort = (e, option) => {
     // TODO: sort on basis of order type
     // sort = {_sort:option.sort, _order:option.order}
-    const sort = { _sort: option.sort };
+    const sort = { _sort: option.sort,_order:option.order };
     setSort(sort);
   };
   const handlePage = (page) => {

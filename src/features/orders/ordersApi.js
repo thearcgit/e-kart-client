@@ -22,11 +22,10 @@ export function createOrder(order) {
 export function fetchAllOrders(sort, pagination) {
 
   let queryString = "";
-  // for(let key in pagination){
-  //   queryString += `${key}=${pagination[key]}&`
-  // }
+  for(let key in pagination){
+    queryString += `${key}=${pagination[key]}&`
+  }
 
-  const { _limit, _page } = pagination
   return new Promise(async (resolve) => {
     try {
 
@@ -36,18 +35,18 @@ export function fetchAllOrders(sort, pagination) {
       let orders = res.data
 
       // Filter for Pagination..............
-      if (Object.keys(sort).length > 0) {
-        orders.sort((a, b) => {
-          if (sort._sort === "totalAmount") {
-            if (sort._order === "asc") return a.totalAmount - b.totalAmount
-            else return b.totalAmount - a.totalAmount
-          }
-        })
+      // if (Object.keys(sort).length > 0) {
+      //   orders.sort((a, b) => {
+      //     if (sort._sort === "totalAmount") {
+      //       if (sort._order === "asc") return a.totalAmount - b.totalAmount
+      //       else return b.totalAmount - a.totalAmount
+      //     }
+      //   })
 
 
-      }
-      orders = res.data.slice((_page - 1) * _limit, _page * _limit);
-      let totalOrders = res?.data.length
+      // }
+      orders = res.data;
+      let totalOrders = res?.headers.get("X-Total-Count");
 
       resolve({ orders: orders, totalOrders: +totalOrders });
 
