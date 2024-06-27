@@ -2,10 +2,10 @@
 import axios from "axios";
 
 
-export function fetchUserOrders(userId) {
+export function fetchUserOrders() {
   return new Promise(async (resolve, reject) => {
     try {
-      let res = await axios.get("http://localhost:8080/orders/?user.id=" + userId,);
+      let res = await axios.get("/orders");
       if (res.status === 200) {
         resolve(res.data)
       } else {
@@ -17,10 +17,10 @@ export function fetchUserOrders(userId) {
     }
   });
 }
-export function fetchLoggedInUser(userId) {
+export function fetchLoggedInUser() {
   return new Promise(async (resolve, reject) => {
     try {
-      let res = await axios.get("http://localhost:8080/users/" + userId);
+      let res = await axios.get("/users");
       if (res.status === 200) {
         resolve(res.data)
       } else {
@@ -35,7 +35,7 @@ export function fetchLoggedInUser(userId) {
 export function updateUser(update) {
   return new Promise(async (resolve) => {
     try {
-      let res = await axios.patch("http://localhost:8080/users/" + update.id,
+      let res = await axios.patch("/users/" ,
         update,
         { headers: { "Content-Type": "application/json" } },
       );

@@ -3,7 +3,7 @@ import axios from "axios";
 export function fetchAllProducts() {
   return new Promise(async (resolve) => {
     try {
-      let res = await axios.get("http://localhost:8080/products");
+      let res = await axios.get("/products");
       resolve(res);
     } catch (error) {
       console.error("Error fetching count:", error);
@@ -11,7 +11,7 @@ export function fetchAllProducts() {
     }
   });
 }
-export function fetchProductsByFilters(filter, sort, pagination) {
+export function fetchProductsByFilters(filter, sort, pagination,admin) {
   //todo: filter = {category:["smartphone","laptop"]}
   let queryString = "";
   for (let key in filter) {
@@ -29,9 +29,12 @@ export function fetchProductsByFilters(filter, sort, pagination) {
   for (let key in pagination) {
     queryString += `${key}=${pagination[key]}&`
   }
+  if(admin){
+    queryString += "admin=true"
+  }
   return new Promise(async (resolve) => {
     try {
-      let res = await axios.get(`http://localhost:8080/products/?${queryString}`);
+      let res = await axios.get(`/products/?${queryString}`);
 
       // Filter for Pagination..............
       let products = res.data;
@@ -48,7 +51,7 @@ export function fetchProductsByFilters(filter, sort, pagination) {
 export const addNewProduct = (product) => {
   return new Promise(async (resolve, reject) => {
     try {
-      let res = await axios.post(`http://localhost:8080/products`,
+      let res = await axios.post(`/products`,
         product,
         { headers: { "Content-Type": "application/json" } },
       )
@@ -63,7 +66,7 @@ export const addNewProduct = (product) => {
 export const updateProduct = (product) => {
   return new Promise(async(resolve, reject) => {
     try {
-      let res =await axios.patch(`http://localhost:8080/products/${product.id}`,
+      let res =await axios.patch(`/products/${product.id}`,
         product,
         { headers: { "Content-Type": "application/json" } },
     )
@@ -81,7 +84,7 @@ export const updateProduct = (product) => {
 export function fetchProductById(id) {
   return new Promise(async (resolve) => {
     try {
-      let res = await axios.get(`http://localhost:8080/products/${id}`);
+      let res = await axios.get(`/products/${id}`);
       resolve(res.data);
     } catch (error) {
       console.error("Error fetching count:", error);
@@ -93,7 +96,7 @@ export function fetchProductById(id) {
 export function fetchCategories() {
   return new Promise(async (resolve) => {
     try {
-      let res = await axios.get("http://localhost:8080/categories");
+      let res = await axios.get("/categories");
       resolve(res);
     } catch (error) {
       console.error("Error fetching count:", error);
@@ -105,8 +108,7 @@ export function fetchCategories() {
 export function fetchBrands() {
   return new Promise(async (resolve) => {
     try {
-      let res = await axios.get("http://localhost:8080/brands");
-      console.log('brands',res)
+      let res = await axios.get("/brands");
       resolve(res);
     } catch (error) {
       console.error("Error fetching count:", error);

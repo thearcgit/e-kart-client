@@ -53,7 +53,7 @@ const UserProfile = () => {
           <h1 className="text-xl font-bold tracking-tight text-red-900 my-5">
             Email: {user?.email}
           </h1>
-          {user.role === "admin" && <h1 className="text-xl font-bold tracking-tight text-red-900 my-5">
+          {user?.role === "admin" && <h1 className="text-xl font-bold tracking-tight text-red-900 my-5">
             Role: {user?.role}
           </h1>}
         </div>
@@ -240,7 +240,7 @@ const UserProfile = () => {
           <p className="mt-1 text-sm leading-6 text-gray-600">
             Addresses:
           </p>
-          {user && user?.addresses.length && user.addresses.map((address, index) =>
+          {user && user?.addresses?.length && user.addresses.map((address, index) =>
             <>
               <div key={index}>
                 {editSelectedAddress === index &&

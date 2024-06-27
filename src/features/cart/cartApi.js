@@ -6,7 +6,7 @@ export function addToCart(item) {
   return new Promise(async (resolve) => {
     try {
 
-      let res = await axios.post(`http://localhost:8080/cart`,item,{
+      let res = await axios.post(`/cart`,item,{
         headers:{"Content-Type":"application/json"}
       })
     
@@ -23,7 +23,7 @@ export function updateCart(update) {
   return new Promise(async (resolve) => {
     try {
 
-      let res = await axios.patch(`http://localhost:8080/cart/${update.id}`,update,{
+      let res = await axios.patch(`/cart/${update.id}`,update,{
         headers:{"Content-Type":"application/json"}
       })
     
@@ -40,7 +40,7 @@ export function deleteItemFromCart(item) {
   return new Promise(async (resolve) => {
     try {
 
-      let res = await axios.delete(`http://localhost:8080/cart/${item.id}`)
+      let res = await axios.delete(`/cart/${item.id}`)
     
       resolve({data:{id:item.id}})
     } catch (error) {
@@ -51,11 +51,11 @@ export function deleteItemFromCart(item) {
   }
   );
 }
-export function resetCart(userId) {
+export function resetCart() {
   return new Promise(async (resolve) => {
     try {
 
-      let allItems = await fetchItemsByUserId(userId)
+      let allItems = await fetchItemsByUserId()
       for(let item of allItems){
         await deleteItemFromCart(item)
       }
@@ -70,11 +70,11 @@ export function resetCart(userId) {
   );
 }
 
-export function fetchItemsByUserId(userId) {
+export function fetchItemsByUserId() {
   return new Promise(async (resolve) => {
     try {
 
-      let res = await axios.get(`http://localhost:8080/cart?userId=${userId}`)
+      let res = await axios.get(`/cart`)
       resolve(res.data)
     } catch (error) {
       console.error("Error fetching count:", error);

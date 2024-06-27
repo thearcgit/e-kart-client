@@ -6,7 +6,7 @@ export function createOrder(order) {
   return new Promise(async (resolve) => {
     try {
 
-      let res = await axios.post(`http://localhost:8080/orders`, order, {
+      let res = await axios.post(`/orders`, order, {
         headers: { "Content-Type": "application/json" }
       })
 
@@ -25,11 +25,14 @@ export function fetchAllOrders(sort, pagination) {
   for(let key in pagination){
     queryString += `${key}=${pagination[key]}&`
   }
+  for(let key in sort){
+    queryString += `${key}=${sort[key]}&`
+  }
 
   return new Promise(async (resolve) => {
     try {
 
-      let res = await axios.get(`http://localhost:8080/orders/?${queryString}`, {
+      let res = await axios.get(`/orders/admin/?${queryString}`, {
         headers: { "Content-Type": "application/json" }
       })
       let orders = res.data
@@ -63,7 +66,7 @@ export function updateOrder(order) {
   return new Promise(async (resolve) => {
     try {
 
-      let res = await axios.patch(`http://localhost:8080/orders/${order.id}`, order, {
+      let res = await axios.patch(`/orders/${order.id}`, order, {
         headers: { "Content-Type": "application/json" }
       })
 

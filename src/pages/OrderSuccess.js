@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { Link, Navigate, useParams } from 'react-router-dom'
-import { myOrders, resetOrder } from '../features/orders/orderSlice'
+import { myOrders, resetOrder, selectCurrentOrder } from '../features/orders/orderSlice'
 import { resetCartAsync } from '../features/cart/cartSlice'
 import {useDispatch,useSelector} from "react-redux"
 import { selectUserInfo } from '../features/user/userSlice'
@@ -8,19 +8,21 @@ import { selectUserInfo } from '../features/user/userSlice'
 const OrderSuccess = () => {
   const order = useParams()
   const user = useSelector(selectUserInfo)
+  const currentOrder= useSelector(selectCurrentOrder)
   const cartItems = useSelector(state => state.cart.cartItems)
   const dispatch = useDispatch()
+  console.log('success',currentOrder)
 
   useEffect(() => {
     if(cartItems && cartItems.length > 0){
 
       // clear cart
-      dispatch(resetCartAsync(user))
+      dispatch(resetCartAsync())
       // clear current order
       dispatch(resetOrder())
     }
 
-  }, [dispatch,user.id])
+  }, [dispatch,user])
 
   return (
     <>

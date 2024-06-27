@@ -47,7 +47,7 @@ export default function ProductDetail() {
     e.preventDefault()
     const index = cartItems.findIndex(item => item?.product.id === product.id)
     if (index < 0) {
-      let newItem = {  product: product.id, quantity: 1, user: user.id }
+      let newItem = {  product: product.id, quantity: 1, }
       dispatch(addToCartAsync(newItem))
     } else {
       console.log('product already in cart.')

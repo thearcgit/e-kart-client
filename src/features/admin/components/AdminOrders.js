@@ -87,10 +87,10 @@ const AdminOrders = () => {
                               <div className="mr-2">
                                 <img
                                   className="w-6 h-6 rounded-full"
-                                  src={item?.thumbnail}
+                                  src={item?.product?.thumbnail}
                                 />
                               </div>
-                              <span>{item?.title} - {item?.quantity}</span>
+                              <span>{item?.product?.title} - {item?.quantity}</span>
                             </div>
                           )}
                         </td>

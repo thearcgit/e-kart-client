@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 
 export default function Login() {
   const loginError = useSelector(state => state.auth.error)
-  const userLoggedIn = useSelector(state => state.auth.loggedInUser)
+  const userLoggedInToken = useSelector(state => state.auth.loggedInUserToken)
   const dispatch = useDispatch();
   const {register, handleSubmit, watch, formState:{errors}} = useForm()
   const formSubmit = data => {
@@ -19,7 +19,7 @@ export default function Login() {
 
   return (
     <>
-    {userLoggedIn && <Navigate to="/" replace={true}/>}
+    {userLoggedInToken && <Navigate to="/" replace={true}/>}
     <div>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">

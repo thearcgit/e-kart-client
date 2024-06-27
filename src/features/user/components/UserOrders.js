@@ -8,8 +8,8 @@ const UserOrders = () => {
   const dispatch = useDispatch()
   useEffect(() => {
 
-    dispatch((fetchUserOrdersAsync(user.id)))
-  }, [user.id])
+    dispatch((fetchUserOrdersAsync()))
+  }, [user])
   return (
     <>
       {orders && orders.length && orders.map((order, i) =>
@@ -23,13 +23,13 @@ const UserOrders = () => {
             </h1>
             <div className="flow-root">
               <ul role="list" className="-my-6 divide-y divide-gray-200">
-                {order.items && order.items.length && order.items.map(items => (
-                  <li key={items?.id} className="flex py-6">
+                {order.items && order.items.length && order.items.map(item => (
+                  <li key={item?.id} className="flex py-6">
 
                     <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                       <img
-                        src={items?.thumbnail}
-                        alt={items?.title}
+                        src={item?.product?.thumbnail}
+                        alt={item?.product?.title}
                         className="h-full w-full object-cover object-center"
                       />
                     </div>
@@ -38,12 +38,12 @@ const UserOrders = () => {
                       <div>
                         <div className="flex justify-between text-base font-medium text-gray-900">
                           <h3>
-                            <a href={items?.href}>{items?.title}</a>
+                            <a href={item?.product?.href}>{item?.product?.title}</a>
                           </h3>
-                          <p className="ml-4">${items?.price}</p>
+                          <p className="ml-4">${item?.product?.price}</p>
                         </div>
                         <p className="mt-1 text-sm text-gray-500">
-                          {items?.color}
+                          {item?.product?.color}
                         </p>
                       </div>
                       <div className="flex flex-1 items-end justify-between text-sm">
@@ -52,7 +52,7 @@ const UserOrders = () => {
                             htmlFor="quantity"
                             className="inline text-sm font-medium leading-6 text-gray-900"
                           >
-                            Qty: {items?.quantity}
+                            Qty: {item?.quantity}
                           </label>
 
                         </div>

@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
-import { deleteItemFromCartAsync, updateCartAsync } from "./cartSlice";
+import { deleteItemFromCartAsync, selectCartChecked, updateCartAsync } from "./cartSlice";
 import { Navigate } from "react-router-dom"
 
 const products = [
@@ -39,13 +39,14 @@ const products = [
 export default function Cart() {
   const [open, setOpen] = useState(true);
   const cartItems = useSelector((state) => state.cart.cartItems);
+  const cartChecked = useSelector(selectCartChecked);
   const dispatch = useDispatch();
-  const totalAmount = cartItems.reduce((amount, item) => item?.product.price * item.quantity + amount,0);
-  const totalItems = cartItems.reduce((total, item) => item.quantity + total,0);
+  const totalAmount = cartItems?.reduce((amount, item) => item?.product.price * item.quantity + amount,0);
+  const totalItems = cartItems?.reduce((total, item) => item.quantity + total,0);
   
 
   const handleQuantity = (e, item) => {
-    dispatch(updateCartAsync({ ...item, quantity: + e.target.value,product:item.product.id,user:item.user.id }))
+    dispatch(updateCartAsync({ ...item, quantity: + e.target.value,product:item.product.id, }))
   }
 
   const handleDelete = (item) => {
@@ -54,7 +55,7 @@ export default function Cart() {
 
   return (
     <>
-      {!cartItems.length && <Navigate to="/" replace={true} />}
+      {!cartItems?.length && cartChecked && <Navigate to="/" replace={true} />}
       <div className="mx-auto mt-12 bg-white max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
           <h1 className="text-2xl font-bold tracking-tight text-gray-900 my-5">
@@ -62,7 +63,7 @@ export default function Cart() {
           </h1>
           <div className="flow-root">
             <ul role="list" className="-my-6 divide-y divide-gray-200">
-              {cartItems.map(item => (
+              {cartItems?.length && cartItems.map(item => (
                 <li key={item.id} className="flex py-6">
                   <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                     <img

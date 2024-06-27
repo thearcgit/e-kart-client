@@ -14,11 +14,12 @@ import UserOrdersPage from "../../../pages/UserOrdersPage";
 import UserProfilePage from "../../../pages/UserProfilePage";
 import Signout from "./Signout";
 import ForgotPasswordPage from "../../../pages/ForgotPasswordPage";
-import AdminProtected from "./AdminProtected copy";
+import AdminProtected from "./AdminProtected";
 import AdminHome from "../../../pages/AdminHome";
 import AdminProductDetail from "../../admin/components/AdminProductDetail";
 import AdminProductFormPage from "../../../pages/AdminProductFormPage";
 import AdminOrdersPage from "../../../pages/AdminOrdersPage";
+import StripeCheckout from "../../../pages/StripeCheckout";
  export const router = createBrowserRouter([
   {
     path: "/",
@@ -47,6 +48,10 @@ import AdminOrdersPage from "../../../pages/AdminOrdersPage";
   {
     path: "/orders",
     element: <Protected><UserOrdersPage /> </Protected>,
+  },
+  {
+    path: "/stripe-checkout/:id",
+    element: <Protected><StripeCheckout /> </Protected>,
   },
   {
     path: "/profile",

@@ -5,9 +5,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { Link, Navigate } from "react-router-dom";
-import { deleteItemFromCartAsync, updateCartAsync } from "../features/cart/cartSlice";
+import { deleteItemFromCartAsync, selectCartChecked, updateCartAsync } from "../features/cart/cartSlice";
 import { useForm } from "react-hook-form";
-import { createOrderAsync } from "../features/orders/orderSlice";
+import { createOrderAsync, selectCurrentOrder } from "../features/orders/orderSlice";
 import { selectUserInfo, updateUserAsync } from "../features/user/userSlice";
 
 
@@ -17,17 +17,19 @@ const Checkout = () => {
     const [open, setOpen] = useState(true);
     const cartItems = useSelector((state) => state.cart.cartItems);
     const user = useSelector(selectUserInfo);
-    const currentOrder = useSelector((state) => state.orders.currentOrder);
-    const [selectedAddress, setSelectedAddress] = useState(user.addresses.length > 0 ? user.addresses[0] : null)
+    const currentOrder = useSelector(selectCurrentOrder);
+    const cartChecked = useSelector(selectCartChecked);
+
+    const [selectedAddress, setSelectedAddress] = useState(user?.addresses?.length > 0 ? user.addresses[0] : null)
     const [paymentMethod, setPaymentMethod] = useState("cash")
     const dispatch = useDispatch();
-    const totalAmount = cartItems.reduce((amount, item) => item.product.price * item.quantity + amount, 0);
-    const totalItems = cartItems.reduce((total, item) => item.quantity + total, 0);
+    const totalAmount = cartItems?.reduce((amount, item) => item.product.price * item.quantity + amount, 0);
+    const totalItems = cartItems?.reduce((total, item) => item.quantity + total, 0);
 
     const { register, handleSubmit, reset, formState: { errors } } = useForm()
 
     const handleQuantity = (e, item) => {
-        dispatch(updateCartAsync({ ...item, quantity: + e.target.value,product:item.product.id,user:item.user.id }))
+        dispatch(updateCartAsync({ ...item, quantity: + e.target.value, product: item.product.id, }))
     }
 
     const handleDelete = (item) => {
@@ -48,7 +50,7 @@ const Checkout = () => {
     }
     const handleOrder = e => {
         if (!selectedAddress) return alert('Please select an address')
-        let order = { items: cartItems, totalAmount, totalItems, user:user.id, paymentMethod, selectedAddress, status: "Pending" }
+        let order = { items: cartItems, totalAmount, totalItems, paymentMethod, selectedAddress, status: "Pending" }
         dispatch(createOrderAsync(order))
         // TODO:Navigate to success page
         // TODO:Clear cart 
@@ -56,14 +58,16 @@ const Checkout = () => {
 
 
     }
+    console.log('checkout',currentOrder)
 
 
     return (
         <>
-            {!cartItems.length && <Navigate to="/" replace={true} />}
-            {currentOrder && <Navigate to={`/order-success/${currentOrder?.id}`} replace={true} />}
+            {!cartItems?.length && cartChecked && <Navigate to="/" replace={true} />}
+            {currentOrder && currentOrder?.paymentMethod === "cash" && <Navigate to={`/order-success/${currentOrder?.id}`} replace={true} />}
+            {currentOrder && currentOrder?.paymentMethod === "card" && <Navigate to={`/stripe-checkout/${currentOrder?.id}`} replace={true} />}
 
-            {cartItems.length > 0 && <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            {cartItems?.length > 0 && <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-5">
                     <div className='lg:col-span-3'>
 
@@ -234,7 +238,7 @@ const Checkout = () => {
                                         Choose from existing addresses
                                     </p>
                                     <ul role="list" className="divide-y divide-gray-100">
-                                        {user.addresses && user.addresses.length && user?.addresses.map((address, i) => (
+                                        {user?.addresses && user?.addresses?.length && user?.addresses.map((address, i) => (
                                             <li key={`${address?.email}${i}`} className="flex justify-between px-4 gap-x-6 py-5 border-solid border-2 border-gray-200">
                                                 <div className="flex min-w-0 gap-x-4">
                                                     <div className="flex items-center gap-x-3">

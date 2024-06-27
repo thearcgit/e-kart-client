@@ -83,6 +83,7 @@ export const { resetOrder } = orderSlice.actions;
 // in the slice file. For example: `useSelector((state: RootState) => state.counter.value)`
 export const myOrders = (state) => state.orders;
 export const selectAllOrders = (state) => state.orders.orders;
+export const selectCurrentOrder = (state) => state.orders.currentOrder;
 
 
 export default orderSlice.reducer;

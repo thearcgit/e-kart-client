@@ -5,7 +5,7 @@ import axios from "axios";
 export function createUser(userData) {
   return new Promise(async (resolve) => {
     try {
-      let res = await axios.post("http://localhost:8080/auth/signup",
+      let res = await axios.post("/auth/signup",
         userData,
         { headers: { "Content-Type": "application/json" } },
       );
@@ -16,10 +16,30 @@ export function createUser(userData) {
     }
   });
 }
+export function checkAuth(loginData) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let res = await axios.get("/auth/checkAuth");
+      if (res.status === 200) {
+        resolve(res.data)
+      } else {
+
+        console.log('Non-200 status code:', res);
+        // throw new Error(res.data || 'Login failed');
+        reject({error:res.data})
+      }
+    } catch (error) {
+      console.warn("Error during login:", error);
+      // Throw the error to be caught by createAsyncThunk
+      // throw new Error(error.response ? error.response.data.message || 'Login failed' : 'Network error');
+      reject({error:error.response.data.message})
+    }
+  });
+}
 export function loginUser(loginData) {
   return new Promise(async (resolve, reject) => {
     try {
-      let res = await axios.post("http://localhost:8080/auth/login",
+      let res = await axios.post("/auth/login",
         loginData,
         { headers: { "Content-Type": "application/json" } }
 

@@ -1,11 +1,12 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { createUser, loginUser, signout, updateUserAddress } from './authApi';
+import { checkAuth, createUser, loginUser, signout, updateUserAddress } from './authApi';
 
 const initialState = {
   user: null,
-  loggedInUser:null,
+  loggedInUserToken:null,
   error:null,
   status: 'idle',
+  checkedAuth:false
 };
 
 
@@ -26,8 +27,21 @@ export const loginUserAsync = createAsyncThunk(
       // The value we return becomes the `fulfilled` action payload
       return response;
       } catch (error) {
-      console.log('login res',error)
       return rejectWithValue(error)
+      
+    }
+  }
+);
+export const checkAuthAsync = createAsyncThunk(
+  'auth/checkAuth',
+  async () => {
+    try {
+      
+      const response = await checkAuth();
+      // The value we return becomes the `fulfilled` action payload
+      return response;
+      } catch (error) {
+        console.log('error',error)
       
     }
   }
@@ -69,7 +83,7 @@ export const authSlice = createSlice({
       })
       .addCase(loginUserAsync.fulfilled, (state, action) => {
         state.status = 'idle';
-        state.loggedInUser = action.payload;
+        state.loggedInUserToken = action.payload;
       })
       .addCase(loginUserAsync.rejected, (state, action) => {
         state.status = 'idle';
@@ -80,7 +94,19 @@ export const authSlice = createSlice({
       })
       .addCase(signoutAsync.fulfilled, (state, action) => {
         state.status = 'idle';
-        state.loggedInUser = null;
+        state.loggedInUserToken = null;
+      })
+      .addCase(checkAuthAsync.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(checkAuthAsync.fulfilled, (state, action) => {
+        state.status = 'idle';
+        state.loggedInUserToken = action.payload;
+        state.checkedAuth = true
+      })
+      .addCase(checkAuthAsync.rejected, (state, action) => {
+        state.status = 'idle';
+        state.checkedAuth = true;
       })
       
       
@@ -94,6 +120,7 @@ export const { increment } = authSlice.actions;
 // in the slice file. For example: `useSelector((state: RootState) => state.counter.value)`
 export const selectCount = (state) => state.counter.value;
 export const selectUser = (state) => state.auth.user;
+export const selectChecked= (state) => state.auth.checkedAuth;
 
 
 export default authSlice.reducer;

@@ -47,6 +47,7 @@ export default function ProductList() {
 
   const [sort, setSort] = useState({});
   const dispatch = useDispatch();
+  const brandsList = products?.map(product => product.brand)
 
   const filters = [
     {
